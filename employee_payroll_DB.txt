@@ -106,3 +106,22 @@ mysql> SELECT salary FROM employee_payroll WHERE name = "Bill";
 | 1000000 |
 +---------+
 1 row in set (0.01 sec)
+
+UC-6-update gender of the employee_payroll data.
+
+pdate employee_payroll set gender = 'M' WHERE name = 'Bill' or name = 'Charlie';
+Query OK, 2 rows affected (0.03 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> SELECT *FROM employee_payroll;
++----+---------+--------+---------+------------+
+| id | name    | gender | salary  | start      |
++----+---------+--------+---------+------------+
+|  1 | Bill    | M      | 1000000 | 2018-01-03 |
+|  2 | Terisa  | F      | 2000000 | 2019-11-13 |
+|  3 | Charlie | M      | 3000000 | 2020-05-21 |
++----+---------+--------+---------+------------+
+3 rows in set (0.01 sec)
+
+
+
