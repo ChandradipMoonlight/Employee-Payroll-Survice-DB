@@ -123,5 +123,66 @@ mysql> SELECT *FROM employee_payroll;
 +----+---------+--------+---------+------------+
 3 rows in set (0.01 sec)
 
+UC-7-find min max avg and number of male and female employee.
 
+mysql> SELECT AVG(basic_pay) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
++----------------+
+| AVG(basic_pay) |
++----------------+
+|        2000000 |
++----------------+
+1 row in set (0.01 sec)
 
+mysql> SELECT AVG(basic_pay) FROM employee_payroll GROUP BY gender;
++----------------+
+| AVG(basic_pay) |
++----------------+
+|        2000000 |
+|        3000000 |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT gender, AVG(basic_pay) FROM employee_payroll GROUP BY gender;
++--------+----------------+
+| gender | AVG(basic_pay) |
++--------+----------------+
+| M      |        2000000 |
+| F      |        3000000 |
++--------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT gender, COUNT(name) FROM employee_payroll GROUP BY gender;
++--------+-------------+
+| gender | COUNT(name) |
++--------+-------------+
+| M      |           2 |
+| F      |           1 |
++--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT gender, SUM(basic_pay) FROM employee_payroll GROUP BY gender;
++--------+----------------+
+| gender | SUM(basic_pay) |
++--------+----------------+
+| M      |        4000000 |
+| F      |        3000000 |
++--------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT gender, MAX(basic_pay) FROM employee_payroll GROUP BY gender;
++--------+----------------+
+| gender | MAX(basic_pay) |
++--------+----------------+
+| M      |        3000000 |
+| F      |        3000000 |
++--------+----------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT gender, MIN(basic_pay) FROM employee_payroll GROUP BY gender;
++--------+----------------+
+| gender | MIN(basic_pay) |
++--------+----------------+
+| M      |        1000000 |
+| F      |        3000000 |
++--------+----------------+
+2 rows in set (0.00 sec)
