@@ -1,4 +1,4 @@
-UC-1-create payroll service database.
+# UC-1-create payroll service database.
 
 mysql> show databases;
 +--------------------+
@@ -42,7 +42,7 @@ mysql> SELECT DATABASE();
 1 row in set (0.00 sec)
 
 
-UC-2-CreateEmployeePayrollDatabase
+# UC-2-CreateEmployeePayrollDatabase
 
 mysql> CREATE TABLE employee_payroll
     -> (
@@ -65,7 +65,7 @@ mysql> DESCRIBE employee_payroll;
 +--------+--------------+------+-----+---------+----------------+
 4 rows in set (0.01 sec)
 
-UC-3-Insert data into employee_payroll database
+# UC-3-Insert data into employee_payroll database
 
 mysql> INSERT INTO employee_payroll ( name, salary, start) VALUES
     -> ( 'Bill', 1000000.00, '2018-01-03' ),
@@ -74,7 +74,7 @@ mysql> INSERT INTO employee_payroll ( name, salary, start) VALUES
 Query OK, 3 rows affected (0.03 sec)
 Records: 3  Duplicates: 0  Warnings: 0
 
-UC-4-Retrieve employee_payroll data
+# UC-4-Retrieve employee_payroll data
 
 mysql> SELECT * FROM employee_payroll;
 +----+---------+---------+------------+
@@ -86,7 +86,7 @@ mysql> SELECT * FROM employee_payroll;
 +----+---------+---------+------------+
 3 rows in set (0.01 sec)
 
-UC-5-Retrieve salary data for perticular name as well as the given date range
+# UC-5-Retrieve salary data for perticular name as well as the given date range
 
 
 mysql> SELECT * FROM employee_payroll
@@ -107,9 +107,9 @@ mysql> SELECT salary FROM employee_payroll WHERE name = "Bill";
 +---------+
 1 row in set (0.01 sec)
 
-UC-6-update gender of the employee_payroll data.
+# UC-6-update gender of the employee_payroll data.
 
-pdate employee_payroll set gender = 'M' WHERE name = 'Bill' or name = 'Charlie';
+mysql> pdate employee_payroll set gender = 'M' WHERE name = 'Bill' or name = 'Charlie';
 Query OK, 2 rows affected (0.03 sec)
 Rows matched: 2  Changed: 2  Warnings: 0
 
@@ -123,7 +123,7 @@ mysql> SELECT *FROM employee_payroll;
 +----+---------+--------+---------+------------+
 3 rows in set (0.01 sec)
 
-UC-7-find min max avg and number of male and female employee.
+# UC-7-find min max avg and number of male and female employee.
 
 mysql> SELECT AVG(basic_pay) FROM employee_payroll WHERE gender = 'M' GROUP BY gender;
 +----------------+
@@ -186,3 +186,24 @@ mysql> SELECT gender, MIN(basic_pay) FROM employee_payroll GROUP BY gender;
 | F      |        3000000 |
 +--------+----------------+
 2 rows in set (0.00 sec)
+
+# UC-8-add phone number, address, department.
+
+mysql> DESCRIBE employee_payroll;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id           | int unsigned | NO   | PRI | NULL    | auto_increment |
+| name         | varchar(150) | NO   |     | NULL    |                |
+| department   | varchar(250) | YES  |     | NULL    |                |
+| address      | varchar(250) | YES  |     | PUNE    |                |
+| phone_number | varchar(250) | YES  |     | NULL    |                |
+| gender       | char(1)      | YES  |     | NULL    |                |
+| basic_pay    | double       | NO   |     | NULL    |                |
+| deductions   | double       | NO   |     | NULL    |                |
+| taxable_pay  | double       | NO   |     | NULL    |                |
+| tax          | double       | NO   |     | NULL    |                |
+| net_pay      | double       | NO   |     | NULL    |                |
+| start        | date         | NO   |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+12 rows in set (0.01 sec)
