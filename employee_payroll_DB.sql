@@ -207,3 +207,35 @@ mysql> DESCRIBE employee_payroll;
 | start        | date         | NO   |     | NULL    |                |
 +--------------+--------------+------+-----+---------+----------------+
 12 rows in set (0.01 sec)
+
+# UC-11-Ability to make Terissa as part of Sales and Marketing Department
+
+mysql> SELECT * FROM employee_payroll;
++----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
+| id | name    | department | address | phone_number | gender | basic_pay | deductions | taxable_pay | tax    | net_pay | start      |
++----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
+|  1 | Bill    | NULL       | NULL    | NULL         | M      |   1000000 |          0 |           0 |      0 |       0 | 2018-01-03 |
+|  2 | Terisa  | Sales      | NULL    | NULL         | F      |   3000000 |          0 |           0 |      0 |       0 | 2019-11-13 |
+|  3 | Charlie | NULL       | NULL    | NULL         | M      |   3000000 |          0 |           0 |      0 |       0 | 2020-05-21 |
+|  4 | Mark    | TBD        | PUNE    | NULL         | M      |   1000000 |          0 |           0 |      0 |       0 | 2018-01-03 |
+|  5 | Terisa  | Marketting | PUNE    | NULL         | F      |   3000000 |     100000 |      200000 | 500000 | 1500000 | 2018-01-02 |
++----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE employee_payroll
+    -> SET address = 'Mumbai'
+    -> WHERE department = 'Marketting';
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM employee_payroll;
++----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
+| id | name    | department | address | phone_number | gender | basic_pay | deductions | taxable_pay | tax    | net_pay | start      |
++----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
+|  1 | Bill    | NULL       | NULL    | NULL         | M      |   1000000 |          0 |           0 |      0 |       0 | 2018-01-03 |
+|  2 | Terisa  | Sales      | NULL    | NULL         | F      |   3000000 |          0 |           0 |      0 |       0 | 2019-11-13 |
+|  3 | Charlie | NULL       | NULL    | NULL         | M      |   3000000 |          0 |           0 |      0 |       0 | 2020-05-21 |
+|  4 | Mark    | TBD        | PUNE    | NULL         | M      |   1000000 |          0 |           0 |      0 |       0 | 2018-01-03 |
+|  5 | Terisa  | Marketting | Mumbai  | NULL         | F      |   3000000 |     100000 |      200000 | 500000 | 1500000 | 2018-01-02 |
++----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
+5 rows in set (0.01 sec)
