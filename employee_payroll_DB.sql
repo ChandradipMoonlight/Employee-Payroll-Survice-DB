@@ -306,6 +306,58 @@ mysql> INSERT INTO payroll VALUES (101,50000,5000,45000,5000,40000),(102,20000,2
 Query OK, 3 rows affected (0.02 sec)
 Records: 3  Duplicates: 0  Warnings: 0
 
+#UC-12-Ensure all retrieve queries done especially in UC 4, UC 5 and UC 7 are working with new table structure.
 
+mysql> SELECT * FROM company;
++------------+--------------+
+| company_id | company_name |
++------------+--------------+
+|          1 | Facebook     |
+|          2 | Google       |
+|          3 | Apple        |
++------------+--------------+
+3 rows in set (0.00 sec)
 
+mysql> DESCRIBE employee;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| id            | int          | NO   | PRI | NULL    |       |
+| company_id    | int          | NO   | MUL | NULL    |       |
+| employee_name | varchar(30)  | NO   |     | NULL    |       |
+| phone_number  | varchar(30)  | NO   |     | NULL    |       |
+| address       | varchar(250) | NO   |     | TBD     |       |
+| gender        | varchar(1)   | NO   |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> SELECT * FROM employee;
++-----+------------+---------------+--------------+---------------+--------+
+| id  | company_id | employee_name | phone_number | address       | gender |
++-----+------------+---------------+--------------+---------------+--------+
+| 101 |          1 | Bill          | 9876543210   | California    | M      |
+| 102 |          1 | Terisa        | 8876543211   | San Francisco | F      |
+| 103 |          2 | Charlie       | 7876543212   | New York      | M      |
++-----+------------+---------------+--------------+---------------+--------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM department;
++---------+------------+
+| dept_id | dept_name  |
++---------+------------+
+|     201 | Sales      |
+|     202 | Marketing  |
+|     203 | Logistics  |
+|     204 | Management |
++---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT MIN(p.net_pay) FROM employee e left join payroll p on  p.emp_id = e.id GROUP BY e.gender;
++----------------+
+| MIN(p.net_pay) |
++----------------+
+|          40000 |
+|          15000 |
++----------------+
+2 rows in set (0.00 sec)
 
