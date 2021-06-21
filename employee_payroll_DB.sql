@@ -208,7 +208,7 @@ mysql> DESCRIBE employee_payroll;
 +--------------+--------------+------+-----+---------+----------------+
 12 rows in set (0.01 sec)
 
-# UC-11-Ability to make Terissa as part of Sales and Marketing Department
+# UC-10-Ability to make Terissa as part of Sales and Marketing Department
 
 mysql> SELECT * FROM employee_payroll;
 +----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
@@ -239,3 +239,73 @@ mysql> SELECT * FROM employee_payroll;
 |  5 | Terisa  | Marketting | Mumbai  | NULL         | F      |   3000000 |     100000 |      200000 | 500000 | 1500000 | 2018-01-02 |
 +----+---------+------------+---------+--------------+--------+-----------+------------+-------------+--------+---------+------------+
 5 rows in set (0.01 sec)
+
+# UC-11-Emplement ER diagram into payroll_servicr DB.
+
+mysql> CREATE TABLE company(
+    -> company_id INT NOT NULL,
+    -> company_name VARCHAR(30) NOT NULL,
+    -> PRIMARY KEY(company_id));
+Query OK, 0 rows affected (0.07 sec)
+
+ INSERT INTO company VALUES(1,'Facebook'),(2,'Google'),(3,'Apple');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+mysql> CREATE TABLE department(
+    -> dept_id INT NOT NULL,
+    -> dept_name VARCHAR(50) NOT NULL,
+    -> PRIMARY KEY(dept_id));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> INSERT INTO department VALUES (201,'Sales'),(202,'Marketing'),(203,'Logistics'),(204,'Management');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+
+mysql> CREATE TABLE employee(
+    -> id INT NOT NULL,
+    -> company_id INT NOT NULL,
+    -> employee_name VARCHAR(30) NOT NULL,
+    -> phone_number VARCHAR(30) NOT NULL,
+    -> address VARCHAR(250) NOT NULL DEFAULT 'TBD',
+    -> gender VARCHAR(1) NOT NULL,
+    -> PRIMARY KEY(id),
+    -> CONSTRAINT FK FOREIGN KEY(company_id) REFERENCES company(company_id));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO employee VALUES 
+(101,1,'Bill','9876543210','California','M'),
+(102,1,'Terisa','8876543211','San Francisco','F'),
+(103,2,'Charlie','7876543212','New York','M'),
+(104, 3, 'Mark', '8811123568', 'GoldenCity', 'M');
+
+mysql> CREATE TABLE employee_department(
+    ->  emp_id INT NOT NULL,
+    -> dept_id INT NOT NULL,
+    -> PRIMARY KEY (emp_id,dept_id),
+    -> FOREIGN KEY (dept_id) REFERENCES department (dept_id),
+    -> FOREIGN KEY (emp_id) REFERENCES employee (id),
+    -> FOREIGN KEY (dept_id) REFERENCES department (dept_id)
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+
+mysql> CREATE TABLE payroll (
+    ->  emp_id INT DEFAULT NULL,
+    -> basic_pay DOUBLE NOT NULL,
+    -> deductions DOUBLE NOT NULL,
+    -> taxable_pay DOUBLE NOT NULL,
+    -> tax DOUBLE NOT NULL,
+    -> net_pay DOUBLE NOT NULL
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO payroll VALUES (101,50000,5000,45000,5000,40000),(102,20000,2000,18000,3000,15000),(103,60000,6000,54000,4000,50000);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+
+
+
